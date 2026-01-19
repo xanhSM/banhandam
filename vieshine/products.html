@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sản Phẩm - VieShine</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root { --primary-color: #55b56d; --secondary-color: #ff9f43; }
+        body { font-family: 'Nunito', sans-serif; background-color: #f8f9fa; color: #444; }
+
+        /* Navbar & Chung */
+        .navbar { padding: 15px 0; background: white; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .navbar-brand img { height: 70px; }
+        .nav-link { font-weight: 700; color: #555 !important; margin: 0 10px; }
+        .nav-link.active { color: var(--primary-color) !important; }
+        .btn-main { background-color: var(--primary-color); color: white; border-radius: 30px; font-weight: 700; padding: 8px 25px; }
+        .cart-badge { position: absolute; top: -8px; right: -8px; background: var(--secondary-color); color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; display: flex; align-items: center; justify-content: center; }
+
+        /* Sidebar Bộ lọc */
+        .filter-sidebar { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
+        .filter-header { font-weight: 700; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .form-check-input:checked { background-color: var(--primary-color); border-color: var(--primary-color); }
+        
+        /* Thẻ sản phẩm */
+        .product-card { border: none; border-radius: 15px; transition: 0.3s; background: white; overflow: hidden; height: 100%; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .product-img { height: 200px; object-fit: cover; width: 100%; }
+        .price-tag { color: var(--primary-color); font-weight: 800; font-size: 1.1rem; }
+        .old-price { text-decoration: line-through; color: #999; font-size: 0.9rem; margin-left: 5px; }
+        
+        /* MỚI: Style cho dòng độ tuổi */
+        .age-info { font-size: 0.85rem; color: #666; background: #e8f5e9; display: inline-block; padding: 2px 10px; border-radius: 20px; margin-bottom: 8px; font-weight: 600; }
+        .age-info i { color: var(--primary-color); margin-right: 5px; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg sticky-top mb-4">
+  <div class="container">
+    <a class="navbar-brand" href="index.html"><img src="logo.jpg" alt="VieShine"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
+        <li class="nav-item"><a class="nav-link active" href="products.html">Sản phẩm</a></li>
+        <li class="nav-item"><a class="nav-link" href="guide.html">Hướng dẫn</a></li>
+        <li class="nav-item ms-2"><a href="order.html" class="btn btn-main">Đặt hàng ngay</a></li>
+        <li class="nav-item ms-3">
+            <div class="cart-icon position-relative" onclick="window.location.href='order.html'" style="cursor: pointer;">
+                <i class="fa-solid fa-cart-shopping fa-lg text-secondary"></i>
+                <span class="cart-badge" id="cartCount">0</span>
+            </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mb-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html" class="text-decoration-none text-secondary">Trang chủ</a></li>
+            <li class="breadcrumb-item active text-success" aria-current="page">Tất cả sản phẩm</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-lg-3 mb-4">
+            <div class="filter-sidebar">
+                <div class="filter-header">
+                    <span><i class="fa-solid fa-filter me-2"></i>Bộ Lọc</span>
+                    <small class="text-muted" style="cursor:pointer" onclick="window.location.reload()">Xóa</small>
+                </div>
+                <h6 class="fw-bold mt-3">Danh mục</h6>
+                <div class="form-check">
+                    <input class="form-check-input filter-check" type="checkbox" value="combo" id="cat0">
+                    <label class="form-check-label fw-bold text-danger" for="cat0">Combo 3 Bánh Gạo</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input filter-check" type="checkbox" value="banh" id="cat1">
+                    <label class="form-check-label" for="cat1">Bánh ăn dặm</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input filter-check" type="checkbox" value="bot" id="cat2">
+                    <label class="form-check-label" for="cat2">Bột rau củ</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input filter-check" type="checkbox" value="snack" id="cat3">
+                    <label class="form-check-label" for="cat3">Snack / Sữa chua khô</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-9">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <span class="text-muted">Hiển thị sản phẩm chất lượng</span>
+                <select class="form-select w-auto border-0 shadow-sm" id="sortSelect" onchange="sortProducts()">
+                    <option value="new">Mới nhất</option>
+                    <option value="price-asc">Giá: Thấp đến Cao</option>
+                    <option value="price-desc">Giá: Cao đến Thấp</option>
+                </select>
+            </div>
+
+            <div class="row g-4" id="productGrid">
+                
+                <div class="col-md-4 col-6 product-item" data-category="combo" data-price="199000">
+                    <div class="product-card h-100 position-relative border border-2 border-warning">
+                        <img src="combo.jpg" class="product-img" alt="Combo VieShine">
+                        <span class="badge bg-danger position-absolute top-0 start-0 m-2 px-3 py-2 rounded-pill">HOT DEAL</span>
+                        <div class="card-body p-3">
+                            <small class="text-muted">Bộ Combo Bánh Gạo</small>
+                            <h6 class="card-title fw-bold mt-1">Combo 3 Bánh + Quà Tặng</h6>
+                            
+                            <div class="age-info"><i class="fa-solid fa-baby"></i>Bé 6 tháng+</div>
+
+                            <div class="d-flex align-items-center mt-2">
+                                <span class="price-tag text-danger fs-5">199.000đ</span>
+                                <span class="old-price">250.000đ</span>
+                            </div>
+                            <button class="btn btn-success w-100 mt-2 rounded-pill fw-bold" onclick="addToCart()">
+                                <i class="fa-solid fa-cart-plus me-1"></i> Mua Ngay
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-6 product-item" data-category="banh" data-price="45000">
+                    <div class="product-card h-100 position-relative">
+                        <img src="sp1.jpg" class="product-img" alt="SP1">
+                        <span class="badge bg-danger position-absolute top-0 start-0 m-2">-10%</span>
+                        <div class="card-body p-3">
+                            <small class="text-muted">Bánh gạo</small>
+                            <h6 class="card-title fw-bold mt-1">Vị Khoai Môn</h6>
+                            <div class="age-info"><i class="fa-solid fa-baby"></i>Bé 6 tháng+</div>
+                            <div class="d-flex align-items-center">
+                                <span class="price-tag">45.000đ</span>
+                                <span class="old-price">50.000đ</span>
+                            </div>
+                            <button class="btn btn-outline-success btn-sm w-100 mt-2 rounded-pill" onclick="addToCart()">Thêm</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-6 product-item" data-category="banh" data-price="45000">
+                    <div class="product-card h-100">
+                        <img src="sp2.jpg" class="product-img" alt="SP2">
+                        <div class="card-body p-3">
+                            <small class="text-muted">Bánh gạo</small>
+                            <h6 class="card-title fw-bold mt-1">Vị Rau Củ</h6>
+                            <div class="age-info"><i class="fa-solid fa-baby"></i>Bé 6 tháng+</div>
+                            <div class="d-flex align-items-center">
+                                <span class="price-tag">45.000đ</span>
+                            </div>
+                            <button class="btn btn-outline-success btn-sm w-100 mt-2 rounded-pill" onclick="addToCart()">Thêm</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-6 product-item" data-category="banh" data-price="45000">
+                    <div class="product-card h-100 position-relative">
+                        <img src="sp3.jpg" class="product-img" alt="SP3">
+                        <span class="badge bg-warning text-dark position-absolute top-0 start-0 m-2">Hot</span>
+                        <div class="card-body p-3">
+                            <small class="text-muted">Bánh gạo</small>
+                            <h6 class="card-title fw-bold mt-1">Vị Táo Mỹ</h6>
+                            <div class="age-info"><i class="fa-solid fa-baby"></i>Bé 7 tháng+</div>
+                            <div class="d-flex align-items-center">
+                                <span class="price-tag">45.000đ</span>
+                            </div>
+                            <button class="btn btn-outline-success btn-sm w-100 mt-2 rounded-pill" onclick="addToCart()">Thêm</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-6 product-item" data-category="bot" data-price="60000">
+                    <div class="product-card h-100">
+                        <img src="sp4.jpg" class="product-img" alt="Vị Chuối"> 
+                        <div class="card-body p-3">
+                            <small class="text-muted">Bột rau củ</small>
+                            <h6 class="card-title fw-bold mt-1">Bột Vị Chuối Tươi</h6>
+                            <div class="age-info"><i class="fa-solid fa-baby"></i>Bé 6 tháng+</div>
+                            <div class="d-flex align-items-center">
+                                <span class="price-tag">60.000đ</span>
+                            </div>
+                            <button class="btn btn-outline-success btn-sm w-100 mt-2 rounded-pill" onclick="addToCart()">Thêm</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-6 product-item" data-category="snack" data-price="55000">
+                    <div class="product-card h-100">
+                        <img src="sp5.jpg" class="product-img" alt="Vị Trái Cây">
+                        <div class="card-body p-3">
+                            <small class="text-muted">Snack / Sữa chua</small>
+                            <h6 class="card-title fw-bold mt-1">Vị Trái Cây Tổng Hợp</h6>
+                            <div class="age-info"><i class="fa-solid fa-baby"></i>Bé 8 tháng+</div>
+                            <div class="d-flex align-items-center">
+                                <span class="price-tag">55.000đ</span>
+                            </div>
+                            <button class="btn btn-outline-success btn-sm w-100 mt-2 rounded-pill" onclick="addToCart()">Thêm</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-6 product-item" data-category="banh" data-price="45000">
+                    <div class="product-card h-100">
+                        <img src="sp6.jpg" class="product-img" alt="Vị Dâu Tây">
+                        <div class="card-body p-3">
+                            <small class="text-muted">Bánh gạo</small>
+                            <h6 class="card-title fw-bold mt-1">Vị Dâu Tây Đà Lạt</h6>
+                            <div class="age-info"><i class="fa-solid fa-baby"></i>Bé 12 tháng+</div>
+                            <div class="d-flex align-items-center">
+                                <span class="price-tag">45.000đ</span>
+                            </div>
+                            <button class="btn btn-outline-success btn-sm w-100 mt-2 rounded-pill" onclick="addToCart()">Thêm</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div> <div class="d-flex justify-content-center mt-5">
+                <nav>
+                  <ul class="pagination">
+                    <li class="page-item disabled"><a class="page-link" href="#">Trước</a></li>
+                    <li class="page-item active bg-success border-success"><a class="page-link bg-success border-success text-white" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link text-success" href="#">Sau</a></li>
+                  </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="bg-dark text-white py-5 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <h5 class="text-uppercase text-success fw-bold mb-3">VieShine</h5>
+                <p class="small text-secondary">Đồng hành cùng sự phát triển khỏe mạnh của bé yêu.</p>
+            </div>
+            <div class="col-md-4 mb-4">
+                <h5 class="text-uppercase fw-bold mb-3">Liên Hệ</h5>
+                <ul class="list-unstyled small text-secondary mb-3">
+                    <li class="mb-2"><i class="fa-solid fa-phone me-2"></i> 0912.345.678</li>
+                </ul>
+                <div class="d-inline-block p-2 bg-white rounded-3">
+                    <img src="QR_VieShine.png" alt="QR Code" style="width: 100px; height: auto;">
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <h5 class="text-uppercase fw-bold mb-3">Theo Dõi</h5>
+                <div class="d-flex gap-3">
+                    <a href="#" class="text-white"><i class="fa-brands fa-facebook fa-lg"></i></a>
+                    <a href="#" class="text-white"><i class="fa-brands fa-tiktok fa-lg"></i></a>
+                </div>
+            </div>
+        </div>
+        <hr class="border-secondary">
+        <div class="text-center small text-secondary">© 2024 VieShine Startup.</div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    let cartCount = parseInt(localStorage.getItem('cartCount')) || 5;
+    document.getElementById('cartCount').innerText = cartCount;
+
+    function addToCart() {
+        cartCount++;
+        document.getElementById('cartCount').innerText = cartCount;
+        localStorage.setItem('cartCount', cartCount);
+        alert("Đã thêm vào giỏ hàng!");
+    }
+
+    const checkboxes = document.querySelectorAll('.filter-check');
+    const items = document.querySelectorAll('.product-item');
+
+    checkboxes.forEach(cb => {
+        cb.addEventListener('change', () => {
+            const checkedCats = Array.from(checkboxes).filter(i => i.checked).map(i => i.value);
+            items.forEach(item => {
+                const itemCat = item.getAttribute('data-category');
+                if (checkedCats.length === 0 || checkedCats.includes(itemCat)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    function sortProducts() {
+        const grid = document.getElementById('productGrid');
+        const sortValue = document.getElementById('sortSelect').value;
+        const productArray = Array.from(items);
+        productArray.sort((a, b) => {
+            const priceA = parseInt(a.getAttribute('data-price'));
+            const priceB = parseInt(b.getAttribute('data-price'));
+            if (sortValue === 'price-asc') return priceA - priceB;
+            if (sortValue === 'price-desc') return priceB - priceA;
+            return 0;
+        });
+        grid.innerHTML = '';
+        productArray.forEach(item => grid.appendChild(item));
+    }
+</script>
+
+</body>
+</html>

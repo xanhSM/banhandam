@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hướng Dẫn Sử Dụng - VieShine</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root { --primary-color: #55b56d; --secondary-color: #ff9f43; }
+        body { font-family: 'Nunito', sans-serif; background-color: #fff; color: #444; }
+
+        /* Navbar (Giống Index) */
+        .navbar { padding: 15px 0; background: white; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .navbar-brand img { height: 70px; transition: transform 0.3s; }
+        .navbar-brand img:hover { transform: scale(1.05); }
+        .nav-link { font-weight: 700; color: #555 !important; margin: 0 10px; }
+        .nav-link.active, .nav-link:hover { color: var(--primary-color) !important; }
+        .btn-main { background-color: var(--primary-color); color: white; border-radius: 30px; font-weight: 700; padding: 8px 25px; transition: 0.3s; }
+        .btn-main:hover { background-color: #449d5b; color: white; transform: translateY(-2px); }
+
+        /* Icon Giỏ hàng */
+        .cart-icon { position: relative; cursor: pointer; }
+        .cart-badge { position: absolute; top: -8px; right: -8px; background: var(--secondary-color); color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; display: flex; align-items: center; justify-content: center; }
+
+        /* Header Trang Con */
+        .page-header { background: #e8f5e9; padding: 60px 0; border-bottom-right-radius: 50px; margin-bottom: 50px; }
+        
+        /* Guide Steps */
+        .step-card { border: none; border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); transition: 0.3s; height: 100%; border-left: 5px solid var(--primary-color); }
+        .step-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .step-icon { width: 60px; height: 60px; background: #e8f5e9; color: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="index.html"><img src="logo.jpg" alt="VieShine"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
+        <a href="products.html" class="btn btn-main btn-lg">Xem Sản Phẩm</a>
+        <li class="nav-item"><a class="nav-link active" href="guide.html">Hướng dẫn</a></li>
+        <li class="nav-item ms-2"><a href="order.html" class="btn btn-main">Đặt hàng ngay</a></li>
+        <li class="nav-item ms-3">
+            <div class="cart-icon" onclick="window.location.href='order.html'">
+                <i class="fa-solid fa-cart-shopping fa-lg text-secondary"></i>
+                <span class="cart-badge" id="cartCount">0</span>
+            </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header text-center">
+    <div class="container">
+        <h1 class="fw-bold text-success">Cẩm Nang Ăn Dặm</h1>
+        <p class="text-muted">Giúp mẹ tự tin, giúp bé ăn ngon miệng</p>
+    </div>
+</div>
+
+<div class="container mb-5">
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card step-card p-4">
+                <div class="step-icon"><i class="fa-solid fa-hand-sparkles"></i></div>
+                <h5 class="fw-bold">1. Chuẩn bị & Vệ sinh</h5>
+                <p class="text-muted small">Rửa sạch tay mẹ và tay bé. Kiểm tra hạn sử dụng trên bao bì VieShine. Chuẩn bị thêm yếm ăn và ghế ăn dặm cho bé.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card step-card p-4">
+                <div class="step-icon"><i class="fa-solid fa-utensils"></i></div>
+                <h5 class="fw-bold">2. Cách dùng linh hoạt</h5>
+                <p class="text-muted small">
+                    <strong>Ăn trực tiếp:</strong> Giúp bé tập cầm nắm (BLW).<br>
+                    <strong>Trộn sữa/Súp:</strong> Bẻ nhỏ bánh vào sữa ấm hoặc súp để làm món ăn phụ mềm, dễ nuốt.
+                </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card step-card p-4">
+                <div class="step-icon"><i class="fa-solid fa-eye"></i></div>
+                <h5 class="fw-bold">3. Lưu ý an toàn</h5>
+                <p class="text-muted small">Luôn quan sát bé khi ăn để tránh hóc. Sau khi mở gói, nên dùng hết trong vòng 24h hoặc bảo quản trong hộp kín.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-12 text-center">
+            <div class="p-5 bg-light rounded-4 border border-dashed">
+                <i class="fa-regular fa-circle-play fa-3x text-secondary mb-3"></i>
+                <h5>Video Hướng Dẫn Thực Tế</h5>
+                <p class="text-muted">Đang cập nhật...</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="text-center mt-5">
+        <a href="order.html" class="btn btn-main btn-lg px-5 shadow">Mua Sản Phẩm Ngay</a>
+    </div>
+</div>
+
+<footer class="bg-dark text-white py-4 mt-5">
+    <div class="container text-center small text-secondary">
+        © 2024 VieShine Startup. All rights reserved.
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Load số giỏ hàng từ bộ nhớ
+    document.getElementById('cartCount').innerText = localStorage.getItem('cartCount') || 5;
+</script>
+</body>
+</html>

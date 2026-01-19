@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặt Hàng - VieShine</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root { --primary-color: #55b56d; --secondary-color: #ff9f43; }
+        body { font-family: 'Nunito', sans-serif; background-color: #f8f9fa; color: #444; }
+
+        /* Navbar & Button styles (Dùng chung) */
+        .navbar { padding: 15px 0; background: white; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .navbar-brand img { height: 70px; }
+        .nav-link { font-weight: 700; color: #555 !important; margin: 0 10px; }
+        .nav-link.active { color: var(--primary-color) !important; }
+        .cart-badge { position: absolute; top: -8px; right: -8px; background: var(--secondary-color); color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; display: flex; align-items: center; justify-content: center; }
+
+        /* Order Box Styling */
+        .order-card { background: white; border: none; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); overflow: hidden; }
+        .order-header { background: var(--primary-color); color: white; padding: 15px 20px; font-weight: 700; }
+        .form-control, .form-select { padding: 12px; border-radius: 10px; border: 1px solid #ddd; }
+        .form-control:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(85, 181, 109, 0.2); }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.95rem; }
+        .total-price { font-size: 1.5rem; color: var(--secondary-color); font-weight: 800; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg sticky-top mb-4">
+  <div class="container">
+    <a class="navbar-brand" href="index.html"><img src="logo.jpg" alt="VieShine"></a>
+    <div class="navbar-nav ms-auto align-items-center">
+        <a class="nav-link" href="index.html">Trang chủ</a>
+        <a class="nav-link active" href="order.html">Đặt hàng</a>
+        <div class="position-relative ms-3">
+            <i class="fa-solid fa-cart-shopping fa-lg text-secondary"></i>
+            <span class="cart-badge" id="cartCount">0</span>
+        </div>
+    </div>
+  </div>
+</nav>
+
+<div class="container mb-5">
+    <h2 class="fw-bold text-center mb-4">Hoàn Tất Đơn Hàng</h2>
+    
+    <div class="row">
+        <div class="col-md-7 mb-4">
+            <div class="card order-card h-100">
+                <div class="order-header"><i class="fa-solid fa-user-pen me-2"></i>Thông tin giao hàng</div>
+                <div class="card-body p-4">
+                    <form id="orderForm" onsubmit="submitOrder(event)">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold small">Họ tên người nhận</label>
+                                <input type="text" id="name" class="form-control" placeholder="VD: Mẹ Lan Anh" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold small">Số điện thoại</label>
+                                <input type="tel" id="phone" class="form-control" placeholder="09xx..." required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold small">Địa chỉ nhận hàng</label>
+                                <input type="text" id="address" class="form-control" placeholder="Số nhà, tên đường, phường/xã..." required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-bold small">Ghi chú (Tùy chọn)</label>
+                                <textarea class="form-control" rows="2" placeholder="VD: Giao giờ hành chính..."></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="card order-card bg-light">
+                <div class="order-header bg-secondary"><i class="fa-solid fa-bag-shopping me-2"></i>Thông tin sản phẩm</div>
+                <div class="card-body p-4">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold small">Sản phẩm</label>
+                        <select id="product" class="form-select" onchange="updatePrice()">
+                            <option value="45000" data-name="Bánh Gạo Vị Khoai Môn">Bánh Gạo Vị Khoai Môn - 45.000đ</option>
+                            <option value="45000" data-name="Bánh Gạo Vị Rau Củ">Bánh Gạo Vị Rau Củ - 45.000đ</option>
+                            <option value="45000" data-name="Bánh Gạo Vị Táo Mỹ">Bánh Gạo Vị Táo Mỹ - 45.000đ</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold small">Số lượng</label>
+                        <div class="input-group">
+                            <button class="btn btn-outline-secondary" type="button" onclick="changeQty(-1)">-</button>
+                            <input type="number" id="qty" class="form-control text-center" value="1" min="1" onchange="updatePrice()">
+                            <button class="btn btn-outline-secondary" type="button" onclick="changeQty(1)">+</button>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <div class="summary-row">
+                        <span class="text-muted">Tạm tính:</span>
+                        <span id="tempPrice">45.000đ</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="text-muted">Phí vận chuyển:</span>
+                        <span class="text-success fw-bold">Miễn phí</span>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <span class="fw-bold">TỔNG CỘNG:</span>
+                        <span class="total-price" id="finalPrice">45.000đ</span>
+                    </div>
+
+                    <button type="button" onclick="document.getElementById('orderForm').dispatchEvent(new Event('submit'))" class="btn btn-success w-100 py-3 fw-bold shadow">
+                        XÁC NHẬN ĐẶT HÀNG
+                    </button>
+                    <p class="text-center small text-muted mt-2"><i class="fa-solid fa-shield-halved me-1"></i>Bảo mật thông tin 100%</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="text-center py-4 text-secondary small">
+    © 2024 VieShine Startup. All rights reserved.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Load số giỏ hàng
+    document.getElementById('cartCount').innerText = localStorage.getItem('cartCount') || 5;
+
+    // Tự động chọn sản phẩm từ URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const prodId = urlParams.get('product');
+    if(prodId) {
+        document.getElementById('product').selectedIndex = prodId - 1;
+        updatePrice();
+    }
+
+    // Hàm đổi số lượng
+    function changeQty(delta) {
+        var qtyInput = document.getElementById('qty');
+        var newVal = parseInt(qtyInput.value) + delta;
+        if(newVal >= 1) {
+            qtyInput.value = newVal;
+            updatePrice();
+        }
+    }
+
+    // Hàm tính tiền
+    function updatePrice() {
+        var price = parseInt(document.getElementById('product').value);
+        var qty = parseInt(document.getElementById('qty').value);
+        var total = price * qty;
+        
+        // Định dạng tiền tệ
+        var formatted = total.toLocaleString('vi-VN') + 'đ';
+        document.getElementById('tempPrice').innerText = formatted;
+        document.getElementById('finalPrice').innerText = formatted;
+    }
+
+    // Xử lý gửi đơn
+    function submitOrder(event) {
+        event.preventDefault();
+        var name = document.getElementById('name').value;
+        var phone = document.getElementById('phone').value;
+        var productSelect = document.getElementById('product');
+        var productName = productSelect.options[productSelect.selectedIndex].getAttribute('data-name');
+        var qty = document.getElementById('qty').value;
+        var total = document.getElementById('finalPrice').innerText;
+
+        alert(`🎉 ĐẶT HÀNG THÀNH CÔNG!\n\nCảm ơn mẹ ${name}!\nĐơn hàng: ${productName} (x${qty})\nTổng tiền: ${total}\n\nVieShine sẽ liên hệ SĐT ${phone} để giao hàng ngay.`);
+        
+        // Xóa giỏ hàng ảo sau khi mua
+        localStorage.setItem('cartCount', 5);
+        window.location.href = "index.html";
+    }
+</script>
+</body>
+</html>
